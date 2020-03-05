@@ -1,20 +1,6 @@
 version: '3.5'
  
 services:
-  golang:
-    container_name: golang_container
-    build: .
-    env_file: 
-      - backend/.env
-    volumes: 
-      - backend:/usr/src/app/
-    ports:
-      - "5500:5500"
-    depends_on: 
-      - postgres
-    networks: 
-      - marketnetwork
-    restart: on-failure
 
   postgres:
     container_name: postgres_container
@@ -40,13 +26,39 @@ services:
     volumes:
        - pgadmin:/root/.pgadmin
     ports:
-      - "${PGADMIN_PORT:-5050}:80"
+      - "${PGADMIN_PORT:-5054}:80"
     networks:
       - marketnetwork
     restart: unless-stopped
- 
+
+  golang:
+    container_name: golang_container
+    build: ./backend
+    env_file: 
+      - ./backend/.env
+    volumes: 
+      - ./backend:/usr/src/app/
+    ports:
+      - "5053:5053"
+    depends_on: 
+      - postgres
+    networks: 
+      - marketnetwork
+    restart: on-failure
+
+  golang-nginx:
+    build: "./backend/nginx"
+    ports:
+      - "5055:80"
+      - "443:443"
+    depends_on: 
+      - golang
+    environment:
+      - VIRTUAL_HOST=example.com
+      - LETSENCRYPT_HOST=example.com
+  
 networks:
-  postgres:
+  marketnetwork:
     driver: bridge
  
 volumes:

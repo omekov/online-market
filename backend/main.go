@@ -11,6 +11,6 @@ import (
 
 func main() {
 	db.Start()
-	log.Println("Starting server port :5500")
-	log.Fatal(http.ListenAndServe(":5500", handlers.Router()))
+	log.Println("Starting server port :5053")
+	log.Fatal(http.ListenAndServe(":5053", handlers.Router()))
 }

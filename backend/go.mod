@@ -1,4 +1,4 @@
-module github.com/omekov/online-market
+module github.com/omekov/online-market/backend
 
 go 1.13
 

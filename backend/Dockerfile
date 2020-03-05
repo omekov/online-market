@@ -2,11 +2,16 @@ FROM golang:alpine AS builder
 MAINTAINER Omekov Azamat <umekovazamat@gmail.com>
 
 
-WORKDIR $GOPATH/src/mypackage/market/
+
+RUN mkdir /hello
+WORKDIR $GOPATH/src/github.com/omekov/online-market/backend
+COPY go.mod .
+COPY go.sum .
+# RUN go get -d -v
+RUN go mod download
 COPY . .
-RUN go get -d -v
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -ldflags="-w -s" -o /go/bin/market
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o /go/bin/online-market
 
 FROM scratch
-COPY --from=builder /go/bin/market /go/bin/market
-ENTRYPOINT ["/go/bin/market"]
+COPY --from=builder /go/bin/online-market /go/bin/online-market
+ENTRYPOINT ["/go/bin/online-market"]
