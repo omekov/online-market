@@ -1,9 +1,7 @@
 FROM golang:alpine AS builder
 MAINTAINER Omekov Azamat <umekovazamat@gmail.com>
-
-
-
-RUN mkdir /hello
+ENV HTTP_PROXY=http://fgt.halykbank.nb:8080
+ENV HTTPS_PROXY=http://fgt.halykbank.nb:8080
 WORKDIR $GOPATH/src/github.com/omekov/online-market/backend
 COPY go.mod .
 COPY go.sum .

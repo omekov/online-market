@@ -1,7 +1,6 @@
 package db
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"time"
@@ -10,12 +9,6 @@ import (
 )
 
 func SelectOrigin(product *models.FoodProduct) error {
-	var db *sql.DB
-	var err error
-	if db, err = Connection(); err != nil {
-		defer db.Close()
-		return err
-	}
 	rows, err := db.Query(`SELECT id, name, russian_name, update_at, create_at FROM origins`)
 	if err != nil {
 		return err
@@ -43,12 +36,6 @@ func SelectOrigin(product *models.FoodProduct) error {
 }
 
 func InsertCategory() {
-	var db *sql.DB
-	var err error
-	if db, err = Connection(); err != nil {
-		defer db.Close()
-		log.Fatalf("Connection err", err)
-	}
 	insertCategory := `
 	INSERT INTO category (
 	name,
@@ -58,19 +45,13 @@ func InsertCategory() {
 	update_at,
 	origin_id
 	) VALUES ($1,$2,$3,$4,$5,$6);`
-	_, err = db.Exec(insertCategory, "Mushrooms", "Грибы", "#C0C0C0", time.Now(), time.Now(), 1)
+	_, err := db.Exec(insertCategory, "Mushrooms", "Грибы", "#C0C0C0", time.Now(), time.Now(), 1)
 	if err != nil {
 		log.Fatalf("insert Catergory", err)
 	}
 	fmt.Println("Success Insert")
 }
 func UpdateCategory() {
-	var db *sql.DB
-	var err error
-	if db, err = Connection(); err != nil {
-		defer db.Close()
-		log.Fatalf("Connection err", err)
-	}
 	updateCategory := `
 	UPDATE category
 	SET russian_name = $2
@@ -78,7 +59,7 @@ func UpdateCategory() {
 	RETURNING id, name;`
 	var name string
 	var id int
-	err = db.QueryRow(updateCategory, 4, "Грибок").Scan(&id, &name)
+	err := db.QueryRow(updateCategory, 4, "Грибок").Scan(&id, &name)
 	if err != nil {
 		log.Fatalf("update Catergory", err)
 	}

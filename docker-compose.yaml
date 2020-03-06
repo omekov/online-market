@@ -10,11 +10,13 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Welcome01}
       PGDATA: /data/postgres
     volumes:
-       - postgres:/data/postgres
-    ports:
-      - "5432:5432"
+      - postgres:/data/postgres
+    expose:
+      - "5432"
+    # ports:
+    #   - "5432:5432"
     networks:
-      - marketnetwork
+      - dbnetwork
     restart: unless-stopped
    
   pgadmin:
@@ -24,12 +26,17 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
     volumes:
-       - pgadmin:/root/.pgadmin
+      - pgadmin:/root/.pgadmin
+    # expose:
+    #   - "80"
     ports:
       - "${PGADMIN_PORT:-5054}:80"
     networks:
+      - dbnetwork
       - marketnetwork
     restart: unless-stopped
+    depends_on: 
+      - postgres
 
   golang:
     container_name: golang_container
@@ -38,28 +45,34 @@ services:
       - ./backend/.env
     volumes: 
       - ./backend:/usr/src/app/
-    ports:
-      - "5053:5053"
+    expose:
+      - "5053"
+    # ports:
+    #   - "5053:5053"
     depends_on: 
       - postgres
     networks: 
+      - dbnetwork
       - marketnetwork
     restart: on-failure
 
-  golang-nginx:
-    build: "./backend/nginx"
+  nginx:
+    build: "./nginx"
+    restart: always
+    expose:
+      - "80"
     ports:
       - "5055:80"
       - "443:443"
     depends_on: 
       - golang
-    environment:
-      - VIRTUAL_HOST=example.com
-      - LETSENCRYPT_HOST=example.com
-  
+    networks: 
+      - marketnetwork
+      
 networks:
   marketnetwork:
     driver: bridge
+  dbnetwork:
  
 volumes:
     postgres:
