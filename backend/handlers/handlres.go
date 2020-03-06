@@ -4,7 +4,8 @@ import "net/http"
 
 func Router() *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/products", ProductsHandler)
-	mux.HandleFunc("/origins", originHandler)
+	mux.HandleFunc("/products/", ProductsHandler)
+	mux.HandleFunc("/origins/", originHandler)
+	mux.HandleFunc("/origin/", originIdHandler)
 	return mux
 }

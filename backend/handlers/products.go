@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/omekov/online-market/backend/db"
@@ -23,7 +24,7 @@ func ProductsHandler(w http.ResponseWriter, r *http.Request) {
 			Categories: &[]m.Category{
 				m.Category{
 					ID:          1,
-					Name:        &name,
+					Name:        name,
 					RussianName: "Овощи",
 					Color:       "blue",
 					CreateAt:    time.Now(),
@@ -31,7 +32,7 @@ func ProductsHandler(w http.ResponseWriter, r *http.Request) {
 				},
 				m.Category{
 					ID:          2,
-					Name:        nil,
+					Name:        "nil",
 					RussianName: "Фрукты",
 					Color:       "orange",
 					CreateAt:    time.Now(),
@@ -59,7 +60,7 @@ func ProductsHandler(w http.ResponseWriter, r *http.Request) {
 }
 func originHandler(w http.ResponseWriter, r *http.Request) {
 	product := m.FoodProduct{}
-	err := db.SelectOrigin(&product)
+	err := db.GetAllOrigins(&product)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		fmt.Fprintf(w, "Db SelectOrigin", err)
@@ -74,3 +75,42 @@ func originHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "applications/json")
 	w.Write(out)
 }
+
+func originIdHandler(w http.ResponseWriter, r *http.Request) {
+	q := r.URL.Query()
+	originId, err := strconv.Atoi(q.Get("id"))
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		fmt.Fprintf(w, "Is not currect: %s", err.Error())
+		return
+	}
+	origin, err := db.GetOrigin(originId)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		fmt.Fprintf(w, "Getorigin: %s", err.Error())
+		return
+	}
+	out, err := json.Marshal(origin)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	w.WriteHeader(200)
+	w.Header().Set("Content-Type", "applications/json")
+	w.Write(out)
+}
+
+func originCreateHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
+// func gen(originId uint64) []models.Category {
+// 	category, err := db.GetCategoryByOriginId(originId)
+// 	if err != nil {
+// 		log.Fatalf("Getorigin: %s", err)
+// 		return nil
+// 	}
+// 	catergories := make([]models.Category, 1)
+
+// 	return catergories
+// }

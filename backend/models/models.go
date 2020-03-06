@@ -17,7 +17,7 @@ type Origins struct {
 
 type Category struct {
 	ID          uint64    `json:"id,omitempty"`
-	Name        *string   `json:"name"`
+	Name        string    `json:"name"`
 	RussianName string    `json:"russianName,omitempty`
 	Color       string    `json:"color,omitempty"`
 	CreateAt    time.Time `json:"createAt,omitempty"`

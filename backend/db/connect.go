@@ -46,7 +46,7 @@ func NewSettings() *DBSettings {
 	}
 }
 
-func Connection() {
+func Connection() (*sql.DB, error) {
 	set := NewSettings()
 	data, err := sql.Open("postgres",
 		fmt.Sprintf(
@@ -59,13 +59,13 @@ func Connection() {
 		),
 	)
 	if err != nil {
-		log.Fatalf("sql open", err)
+		return nil, err
 	}
-	defer data.Close()
 	err = data.Ping()
 	if err != nil {
-		log.Fatalf("sql ping", err)
+		return nil, err
 	}
-	fmt.Println("Successfully connected DataBase!")
+	log.Println("Successfully connected DataBase!")
 	db = data
+	return data, nil
 }
