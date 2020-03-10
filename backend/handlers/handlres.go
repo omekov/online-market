@@ -1,9 +1,12 @@
 package handlers
 
-import "net/http"
+import (
+	"github.com/gorilla/mux"
+)
 
-func Router() *http.ServeMux {
-	mux := http.NewServeMux()
+// Router ...
+func Router() *mux.Router {
+	mux := mux.NewRouter()
 	mux.HandleFunc("/products", ProductsHandler)
 	mux.HandleFunc("/origins", originHandler)
 	return mux

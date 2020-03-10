@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/omekov/online-market/backend/db"
+	"github.com/omekov/online-market/backend/database"
 	m "github.com/omekov/online-market/backend/models"
 )
 
@@ -59,18 +59,14 @@ func ProductsHandler(w http.ResponseWriter, r *http.Request) {
 }
 func originHandler(w http.ResponseWriter, r *http.Request) {
 	product := m.FoodProduct{}
-	err := db.SelectOrigin(&product)
+	err := database.SelectOrigin(&product)
 	if err != nil {
-		http.Error(w, err.Error(), 500)
-		fmt.Fprintf(w, "Db SelectOrigin", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	out, err := json.Marshal(product)
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.WriteHeader(200)
-	w.Header().Set("Content-Type", "applications/json")
-	w.Write(out)
 }
