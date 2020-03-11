@@ -1,11 +1,17 @@
 package handlers
 
-import "net/http"
+import (
+	"github.com/gorilla/mux"
+)
 
-func Router() *http.ServeMux {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/products/", ProductsHandler)
-	mux.HandleFunc("/origins/", originHandler)
-	mux.HandleFunc("/origin/", originIdHandler)
+// Router ...
+func Router() *mux.Router {
+	mux := mux.NewRouter()
+	mux.HandleFunc("/origins", originHandler)
+	mux.HandleFunc("/categories/{id:[0-9]+}", categoryHandler).Methods("GET")
+	mux.HandleFunc("/categories", saveCategoryHandler).Methods("POST")
+	mux.HandleFunc("/categories", categoriesHandler).Methods("GET")
+	mux.HandleFunc("/categories/{id:[0-9]+}", updateCategoryHandler).Methods("PUT")
+	mux.HandleFunc("/categories/{id:[0-9]+}", deleteCategoryHandler).Methods("DELETE")
 	return mux
 }

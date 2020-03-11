@@ -2,28 +2,6 @@ package models
 
 import "time"
 
-type FoodProduct struct {
-	Origins []Origins `json:"origins,omitempty"`
-}
-
-type Origins struct {
-	ID          uint64      `json:"id,omitempty"`
-	Name        string      `json:"name,omitempty"`
-	RussianName string      `json:"russianName,omitempty`
-	CreateAt    time.Time   `json:"createAt,omitempty"`
-	UpdateAt    time.Time   `json:"updateAt,omitempty"`
-	Categories  *[]Category `json:"categories"`
-}
-
-type Category struct {
-	ID          uint64    `json:"id,omitempty"`
-	Name        string    `json:"name"`
-	RussianName string    `json:"russianName,omitempty`
-	Color       string    `json:"color,omitempty"`
-	CreateAt    time.Time `json:"createAt,omitempty"`
-	UpdateAt    time.Time `json:"updateAt,omitempty"`
-}
-
 type Delivery struct {
 	ID                  uint64    `json:"id,omitempty"`
 	StartAt             time.Time `json:"startAt,omitempty"`
