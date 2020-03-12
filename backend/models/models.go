@@ -12,11 +12,10 @@ type Delivery struct {
 }
 
 type Product struct {
-	ID       uint64   `json:"id,omitempty"`
-	Name     string   `json:"name,omitempty"`
-	Weight   int      `json:"weight,omitempty"`
-	BarCode  int      `json:"barCode,omitempty"`
-	Category Category `json:"category,omitempty"`
+	ID      uint64 `json:"id,omitempty"`
+	Name    string `json:"name,omitempty"`
+	Weight  int    `json:"weight,omitempty"`
+	BarCode int    `json:"barCode,omitempty"`
 }
 
 type Man struct {

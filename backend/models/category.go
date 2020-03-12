@@ -12,7 +12,7 @@ type Category struct {
 	RussianName string     `json:"russianName,omitempty` // RussianName ...
 	Color       string     `json:"color,omitempty"`
 	CreateAt    time.Time  `json:"createAt,omitempty"`
-	UpdateAt    *time.Time `json:"updateAt,omitempty"`
+	UpdateAt    *time.Time `json:"updateAt"`
 	OriginID    int32      `json:"originId,omitempty"`
 }
 
