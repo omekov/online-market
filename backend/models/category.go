@@ -18,7 +18,18 @@ type Category struct {
 
 // GetCategory ...
 func GetCategories(categories *[]Category) error {
-	rows, err := db.DB.Query(`SELECT id, name, russianName, color, updateAt, createAt, originId FROM categories ORDER BY createAt DESC`)
+	rows, err := db.DB.Query(`
+		SELECT 
+		id, 
+		name, 
+		russianName, 
+		color, 
+		updateAt, 
+		createAt, 
+		originId 
+		FROM categories 
+		ORDER BY createAt DESC;`,
+	)
 	if err != nil {
 		return err
 	}
@@ -44,8 +55,16 @@ func GetCategories(categories *[]Category) error {
 
 // GetCategory ...
 func GetCategory(id int32, category *Category) error {
-	err := db.DB.QueryRow(
-		`SELECT id, name, russianname, color, updateat, createat FROM categories WHERE id = $1`,
+	err := db.DB.QueryRow(`
+		SELECT 
+		id, 
+		name, 
+		russianName, 
+		color, 
+		updateAt, 
+		createAt 
+		FROM categories 
+		WHERE id = $1`,
 		id,
 	).Scan(
 		&category.ID,
@@ -66,9 +85,9 @@ func SaveCategory(category *Category) error {
 	_, err := db.DB.Exec(`
 		INSERT INTO categories (
 		name,
-		russianname,
+		russianName,
 		color,
-		originid
+		originId
 		) VALUES ($1,$2,$3,$4);`,
 		&category.Name,
 		&category.RussianName,
@@ -82,28 +101,33 @@ func SaveCategory(category *Category) error {
 }
 
 // UpdateCategory ...
-func UpdateCategory(category *Category) error {
-	err := db.DB.QueryRow(`
+func UpdateCategory(id int32, category *Category) error {
+	_, err := db.DB.Exec(`
 		UPDATE categories
 		SET name = $2,
-		SET russianname = $3,
-		SET color = $4,
-		SET updateat = $5,
-		SET originid = $6,
+		russianName = $3,
+		color = $4,
+		updateAt = $5,
+		originId = $6
 		WHERE id = $1;`,
-		&category.ID,
+		id,
 		&category.Name,
 		&category.RussianName,
 		&category.Color,
-		&category.UpdateAt,
+		time.Now(),
 		&category.OriginID,
-	).Scan(
-		&category.ID,
-		&category.Name,
-		&category.RussianName,
-		&category.Color,
-		&category.UpdateAt,
-		&category.OriginID,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func DeleteCategory(id int32) error {
+	_, err := db.DB.Exec(`
+		DELETE FROM categories
+		WHERE id = $1;`,
+		id,
 	)
 	if err != nil {
 		return err

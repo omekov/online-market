@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -15,61 +14,71 @@ func categoryHandler(w http.ResponseWriter, r *http.Request) {
 	strId := vars["id"]
 	id, err := strconv.ParseInt(strId, 32, 32)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		ERROR(w, http.StatusBadRequest, err)
 		return
 	}
 	category := models.Category{}
 	err = models.GetCategory(int32(id), &category)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		ERROR(w, http.StatusInternalServerError, err)
 		return
 	}
-	cat, err := json.Marshal(category)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	w.Write(cat)
-}
-
-func saveCategoryHandler(w http.ResponseWriter, r *http.Request) {
-	category := models.Category{}
-	err := json.NewDecoder(r.Body).Decode(&category)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	err = models.SaveCategory(&category)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	cat, err := json.Marshal(category)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	w.Write(cat)
+	JSON(w, http.StatusOK, category)
 }
 func categoriesHandler(w http.ResponseWriter, r *http.Request) {
 	var categories []models.Category
 	err := models.GetCategories(&categories)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		ERROR(w, http.StatusInternalServerError, err)
 		return
 	}
-	fmt.Println(categories)
-	cat, err := json.Marshal(categories)
+	JSON(w, http.StatusOK, categories)
+}
+func createCategoryHandler(w http.ResponseWriter, r *http.Request) {
+	category := models.Category{}
+	err := json.NewDecoder(r.Body).Decode(&category)
+	if err != nil {
+		ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+	err = models.SaveCategory(&category)
+	if err != nil {
+		ERROR(w, http.StatusInternalServerError, err)
+		return
+	}
+	JSON(w, http.StatusCreated, category)
+}
+func updateCategoryHandler(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+	category := models.Category{}
+	err = json.NewDecoder(r.Body).Decode(&category)
+	if err != nil {
+		ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+	err = models.UpdateCategory(int32(id), &category)
+	if err != nil {
+		ERROR(w, http.StatusInternalServerError, err)
+		return
+	}
+	JSON(w, http.StatusOK, category)
+}
+func deleteCategoryHandler(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.Write(cat)
-
-}
-func updateCategoryHandler(w http.ResponseWriter, r *http.Request) {
-
-}
-func deleteCategoryHandler(w http.ResponseWriter, r *http.Request) {
-
+	err = models.DeleteCategory(int32(id))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	JSON(w, http.StatusNoContent, id)
 }
