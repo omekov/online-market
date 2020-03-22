@@ -1,0 +1,41 @@
+.about {
+  &__body {
+  }
+  &__column {
+  }
+  &__header {
+  }
+  &__row {
+  }
+  &__text {
+  }
+  &__title {
+      margin: 0 0 30px 0;
+  }
+}
+.item-about {
+  &__icon {
+  }
+  &__text {
+  }
+  &__title {
+  }
+}
+.title {
+    font-size: 34px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 9px;
+    text-align: center;
+    padding: 0 0 30px 0;
+    &:after {
+        content: '';
+        position: absolute;
+        width: 50px;
+        bottom: 0;
+        height: 1px;
+        left: 50%;
+        background-color: #000;
+        margin: 0 0 0 -25px;
+    }
+}

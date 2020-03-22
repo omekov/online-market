@@ -1,13 +1,14 @@
 package db
 
 import (
-	"log"
 	"os"
+
+	"log"
 
 	"github.com/joho/godotenv" // ...
 )
 
-// Settings ...
+// settings ...
 type settings struct {
 	Host     string
 	Port     string
@@ -16,31 +17,29 @@ type settings struct {
 	DBName   string
 }
 
-// GetEnv ...
-func getEnv(ev string, defVal ...string) string {
-	v := os.Getenv(ev)
-	if v == "" {
-		if len(defVal) == 0 {
-			log.Fatalf("Not exists require env variable %s", ev)
-		}
-		v = defVal[0]
-	}
-	return v
-}
-
 // NewSettings ...
 func newSettings() *settings {
-	if _, err := os.Stat(".env"); !os.IsNotExist(err) {
-		err := godotenv.Load()
-		if err != nil {
-			log.Fatal("Error loading .env file")
+	env := os.Getenv("PROD_ENV")
+	if env == "local" {
+		if _, err := os.Stat(".env.local"); !os.IsNotExist(err) {
+			err = godotenv.Load(".env.local")
+			if err != nil {
+				log.Fatal("Error loading .env.local file")
+			}
+		}
+	} else {
+		if _, err := os.Stat(".env"); !os.IsNotExist(err) {
+			err = godotenv.Load()
+			if err != nil {
+				log.Fatal("Error loading .env file")
+			}
 		}
 	}
 	return &settings{
-		Host:     getEnv("DBHOST"),
-		Port:     getEnv("DBPORT"),
-		User:     getEnv("DBUSER"),
-		Password: getEnv("DBPASS"),
-		DBName:   getEnv("DBNAME"),
+		Host:     os.Getenv("DBHOST"),
+		Port:     os.Getenv("DBPORT"),
+		User:     os.Getenv("DBUSER"),
+		Password: os.Getenv("DBPASS"),
+		DBName:   os.Getenv("DBNAME"),
 	}
 }

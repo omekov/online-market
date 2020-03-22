@@ -6,17 +6,18 @@ import (
 	"github.com/omekov/online-market/backend/db"
 )
 
+// Category ...
 type Category struct {
 	ID          int32      `json:"id,omitempty"`
 	Name        string     `json:"name,omitempty"`
-	RussianName string     `json:"russianName,omitempty` // RussianName ...
+	RussianName string     `json:"russianName,omitempty` // russianName ...
 	Color       string     `json:"color,omitempty"`
 	CreateAt    time.Time  `json:"createAt,omitempty"`
 	UpdateAt    *time.Time `json:"updateAt"`
 	OriginID    int32      `json:"originId,omitempty"`
 }
 
-// GetCategory ...
+// GetCategories ...
 func GetCategories(categories *[]Category) error {
 	rows, err := db.DB.Query(`
 		SELECT 
@@ -80,7 +81,7 @@ func GetCategory(id int32, category *Category) error {
 	return nil
 }
 
-// InsertCategory ...
+// SaveCategory ...
 func SaveCategory(category *Category) error {
 	_, err := db.DB.Exec(`
 		INSERT INTO categories (
@@ -123,6 +124,7 @@ func UpdateCategory(id int32, category *Category) error {
 	return nil
 }
 
+// DeleteCategory ...
 func DeleteCategory(id int32) error {
 	_, err := db.DB.Exec(`
 		DELETE FROM categories

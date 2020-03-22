@@ -3,11 +3,13 @@ package db
 import (
 	"database/sql"
 	"fmt"
+
 	"log"
 
-	_ "github.com/lib/pq"
+	_ "github.com/lib/pq" //postgres driver
 )
 
+// DB ...
 var DB *sql.DB
 
 // Connection ...
@@ -24,12 +26,11 @@ func Connection() {
 		),
 	)
 	if err != nil {
-		log.Fatalf("SQL Open:", err)
+		log.Fatalf("SQL Open: %v", err)
 	}
-
 	err = db.Ping()
 	if err != nil {
-		log.Fatalf("SQL Ping:", err)
+		log.Fatalf("SQL Ping: %v", err)
 	}
 	DB = db
 }

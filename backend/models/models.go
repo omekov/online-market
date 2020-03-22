@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+// Delivery ...
 type Delivery struct {
 	ID                  uint64    `json:"id,omitempty"`
 	StartAt             time.Time `json:"startAt,omitempty"`
@@ -11,6 +12,7 @@ type Delivery struct {
 	Products            []Product `json:"products,omitempty"`
 }
 
+// Product ...
 type Product struct {
 	ID      uint64 `json:"id,omitempty"`
 	Name    string `json:"name,omitempty"`
@@ -18,6 +20,7 @@ type Product struct {
 	BarCode int    `json:"barCode,omitempty"`
 }
 
+// Man ...
 type Man struct {
 	ID          uint64      `json:"id,omitempty"`
 	Name        string      `json:"name,omitempty"`
@@ -26,6 +29,7 @@ type Man struct {
 	Transport   []Transport `json:"transport,omitempty"`
 }
 
+// Transport ...
 type Transport struct {
 	ID   uint64 `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
