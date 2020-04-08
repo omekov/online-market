@@ -2,8 +2,8 @@ version: '3.5'
  
 services:
 
-  postgres:
-    container_name: postgres_container
+  database:
+    container_name: database_container
     image: postgres:12.1
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -11,63 +11,79 @@ services:
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
-    expose:
-      - "5432"
-    # ports:
-    #   - "5432:5432"
-    networks:
-      - dbnetwork
-    restart: unless-stopped
-   
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4:4.16
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-    volumes:
-      - pgadmin:/root/.pgadmin
     # expose:
-    #   - "80"
+    #   - "5432"
     ports:
-      - "${PGADMIN_PORT:-5054}:80"
+      - "5431:5432"
     networks:
       - dbnetwork
-      - marketnetwork
     restart: unless-stopped
-    depends_on: 
-      - postgres
+  
+  # migrate:
+  #   container_name: migrate_container
+  #   image: migrate/migrate
+  #   depends_on: 
+  #     - postgres
+  #   volumes: 
+  #     - /database/migrations:/migrations
+  #   networks: 
+  #     - dbnetwork
+  #   command: ["-path", "/migrations", "-database", "postgres://postgres:Welcome01@postgres_container/marketdb?sslmode=disable", "up", "3"]
+  #   links: 
+  #     - postgres
+   
+  # pgadmin:
+  #   container_name: pgadmin_container
+  #   image: dpage/pgadmin4:4.16
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+  #   depends_on:
+  #     - postgres
+  #   volumes:
+  #     - pgadmin:/root/.pgadmin
+  #   # expose:
+  #   #   - "80"
+  #   ports:
+  #     - "${PGADMIN_PORT:-5054}:80"
+  #   links: 
+  #     - postgres
+  #   networks:
+  #     - dbnetwork
+  #     - marketnetwork
+  #   restart: unless-stopped
 
-  golang:
-    container_name: golang_container
-    build: ./backend
+
+  go-app:
+    container_name: apiserver_container
+    build: ./go-app
     env_file: 
-      - ./backend/.env
+      - ./go-app/.env
     volumes: 
-      - ./backend:/usr/src/app/
-    expose:
-      - "5053"
-    # ports:
-    #   - "5053:5053"
+      - ./go-app:/usr/src/app/
+    # expose:
+    #   - "5053"
+    ports:
+      - "5053:5053"
     depends_on: 
-      - postgres
+      - database
     networks: 
       - dbnetwork
       - marketnetwork
     restart: on-failure
 
-  nginx:
-    build: "./nginx"
-    restart: always
-    expose:
-      - "80"
-    ports:
-      - "5055:80"
-      - "443:443"
-    depends_on: 
-      - golang
-    networks: 
-      - marketnetwork
+  # nginx:
+  #   build: "./nginx"
+  #   restart: always
+  #   expose:
+  #     - "80"
+  #   ports:
+  #     - "5055:80"
+  #     - "443:443"
+  #   depends_on: 
+  #     - golang
+  #   networks: 
+  #     - marketnetwork
       
 networks:
   marketnetwork:
