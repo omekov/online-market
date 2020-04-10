@@ -12,7 +12,7 @@ func TestCategory(t *testing.T) *Category {
 		Name:     "Овощи",
 		RusName:  "Овощи",
 		Color:    "green",
-		CreateAt: now,
+		CreateAt: &now,
 		UpdateAt: &now,
 		OriginID: 1,
 	}
@@ -26,7 +26,7 @@ func TestCategories(t *testing.T) *[]Category {
 			Name:     "Овощи",
 			RusName:  "Овощи",
 			Color:    "green",
-			CreateAt: now,
+			CreateAt: &now,
 			UpdateAt: &now,
 			OriginID: 1,
 		},

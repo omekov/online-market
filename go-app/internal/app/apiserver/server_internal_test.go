@@ -121,18 +121,13 @@ func TestServer_handlerCategoriesDelete(t *testing.T) {
 			payload:      nil,
 			expectedCode: http.StatusOK,
 		},
-		{
-			name:         "invalid payload",
-			payload:      "invalid",
-			expectedCode: http.StatusBadRequest,
-		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			rec := httptest.NewRecorder()
 			buf := &bytes.Buffer{}
 			json.NewEncoder(buf).Encode(tc.payload)
-			req, _ := http.NewRequest(http.MethodDelete, route+"/categories/1", buf)
+			req, _ := http.NewRequest(http.MethodDelete, route+"/categories/666", buf)
 			s.ServeHTTP(rec, req)
 			assert.Equal(t, tc.expectedCode, rec.Code)
 		})

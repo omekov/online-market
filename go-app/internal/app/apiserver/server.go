@@ -2,6 +2,7 @@ package apiserver
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -111,14 +112,8 @@ func (s *server) handlerHome() http.HandlerFunc {
 
 // handlerCategories - обработчик категорий продуктов
 func (s *server) handlerCategories() http.HandlerFunc {
-	var categories []model.Category
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, err := json.Marshal(categories)
-		if err != nil {
-			s.error(w, r, http.StatusBadGateway, err)
-			return
-		}
-		err = s.store.Category().GetAll(&categories)
+		categories, err := s.store.Category().GetAll()
 		if err != nil {
 			s.error(w, r, http.StatusInternalServerError, err)
 			return
@@ -139,6 +134,10 @@ func (s *server) handlerCategoryGetByID() http.HandlerFunc {
 		}
 		err = s.store.Category().GetByID(id, &category)
 		if err != nil {
+			if err == sql.ErrNoRows {
+				s.error(w, r, http.StatusNotFound, store.ErrRecordNotFound)
+				return
+			}
 			s.error(w, r, http.StatusInternalServerError, err)
 			return
 		}
@@ -180,6 +179,10 @@ func (s *server) handlerCategoryUpdate() http.HandlerFunc {
 		}
 		err = s.store.Category().Update(id, &category)
 		if err != nil {
+			if err == sql.ErrNoRows {
+				s.error(w, r, http.StatusNotFound, store.ErrRecordNotFound)
+				return
+			}
 			s.error(w, r, http.StatusInternalServerError, err)
 			return
 		}
@@ -198,6 +201,10 @@ func (s *server) handlerCategoryDelete() http.HandlerFunc {
 		}
 		err = s.store.Category().Delete(id)
 		if err != nil {
+			if err == sql.ErrNoRows {
+				s.error(w, r, http.StatusNotFound, store.ErrRecordNotFound)
+				return
+			}
 			s.error(w, r, http.StatusInternalServerError, err)
 			return
 		}

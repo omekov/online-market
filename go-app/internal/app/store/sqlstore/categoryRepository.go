@@ -1,11 +1,7 @@
 package sqlstore
 
 import (
-	"database/sql"
-	"time"
-
 	"github.com/omekov/online-market/go-app/internal/app/model"
-	"github.com/omekov/online-market/go-app/internal/app/store"
 )
 
 // CategoryRepository - Модель для Репозиторий
@@ -14,10 +10,11 @@ type CategoryRepository struct {
 }
 
 // GetAll - Возвращает все категорий
-func (r *CategoryRepository) GetAll(categories *[]model.Category) error {
-	rows, err := r.store.db.Query("SELECT id, name, russianName, color, createAt, updateAt, originId FROM categories ORDER BY createAt DESC;")
+func (r *CategoryRepository) GetAll() ([]model.Category, error) {
+	var categories []model.Category
+	rows, err := r.store.db.Query("SELECT id, name, russianName, color, originId FROM categories ORDER BY createAt DESC;")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer rows.Close()
 	for rows.Next() {
@@ -27,22 +24,20 @@ func (r *CategoryRepository) GetAll(categories *[]model.Category) error {
 			&c.Name,
 			&c.RusName,
 			&c.Color,
-			&c.CreateAt,
-			&c.UpdateAt,
 			&c.OriginID,
 		)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		*categories = append(*categories, c)
+		categories = append(categories, c)
 	}
-	return nil
+	return categories, nil
 }
 
 // GetByID - Возвращает по ID категорий
 func (r *CategoryRepository) GetByID(id int, category *model.Category) error {
 	err := r.store.db.QueryRow(
-		"SELECT id, name, russianName, color, updateAt, createAt FROM categories WHERE id = $1;",
+		"SELECT id, name, russianName, color, updateAt, createAt, originId FROM categories WHERE id = $1;",
 		id,
 	).Scan(
 		&category.ID,
@@ -51,11 +46,9 @@ func (r *CategoryRepository) GetByID(id int, category *model.Category) error {
 		&category.Color,
 		&category.UpdateAt,
 		&category.CreateAt,
+		&category.OriginID,
 	)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return store.ErrRecordNotFound
-		}
 		return err
 	}
 	return nil
@@ -63,13 +56,13 @@ func (r *CategoryRepository) GetByID(id int, category *model.Category) error {
 
 // Create - Создаем категорию
 func (r *CategoryRepository) Create(category *model.Category) error {
-	_, err := r.store.db.Exec(
-		"INSERT INTO categories (name, russianName, color, originId) VALUES ($1,$2,$3,$4);",
+	err := r.store.db.QueryRow(
+		"INSERT INTO categories (name, russianName, color, originId) VALUES ($1,$2,$3,$4) RETURNING id;",
 		&category.Name,
 		&category.RusName,
 		&category.Color,
 		&category.OriginID,
-	)
+	).Scan(&category.ID)
 	if err != nil {
 		return err
 	}
@@ -78,19 +71,16 @@ func (r *CategoryRepository) Create(category *model.Category) error {
 
 // Update - Обновляем категорию по ID
 func (r *CategoryRepository) Update(id int, category *model.Category) error {
-	_, err := r.store.db.Exec(
-		"UPDATE categories SET name = $2, russianName = $3, color = $4, updateAt = $5,	originId = $6 WHERE id = $1;",
+	err := r.store.db.QueryRow(
+		"UPDATE categories SET name = $2, russianName = $3, color = $4, updateAt = $5,	originId = $6 WHERE id = $1 RETURNING id;",
 		id,
 		&category.Name,
 		&category.RusName,
 		&category.Color,
-		time.Now(),
+		&category.UpdateAt,
 		&category.OriginID,
-	)
+	).Scan(&category.ID)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return store.ErrRecordNotFound
-		}
 		return err
 	}
 	return nil
@@ -98,14 +88,11 @@ func (r *CategoryRepository) Update(id int, category *model.Category) error {
 
 // Delete - Удаляем категорию по ID
 func (r *CategoryRepository) Delete(id int) error {
-	_, err := r.store.db.Exec(
+	err := r.store.db.QueryRow(
 		"DELETE FROM categories WHERE id = $1;",
 		id,
-	)
+	).Scan(id)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return store.ErrRecordNotFound
-		}
 		return err
 	}
 	return nil

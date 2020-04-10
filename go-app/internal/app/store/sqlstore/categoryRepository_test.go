@@ -38,12 +38,11 @@ func TestCategoryRepository_GetAll(t *testing.T) {
 	defer teardown("categories")
 
 	s := sqlstore.New(db)
-	cs := model.TestCategories(t)
 	c := model.TestCategory(t)
-	err := s.Category().GetAll(cs)
+	_, err := s.Category().GetAll()
 	assert.EqualError(t, err, store.ErrRecordNotFound.Error())
 	s.Category().Create(c)
-	err = s.Category().GetAll(cs)
+	_, err = s.Category().GetAll()
 	assert.NoError(t, err)
 	assert.NotNil(t, c)
 }
@@ -67,7 +66,7 @@ func TestCategoryRepository_Delete(t *testing.T) {
 
 	s := sqlstore.New(db)
 	c := model.TestCategory(t)
-	err := s.Category().Delete(1000)
+	err := s.Category().Delete(1)
 	assert.EqualError(t, err, store.ErrRecordNotFound.Error())
 	s.Category().Create(c)
 	err = s.Category().Delete(1)

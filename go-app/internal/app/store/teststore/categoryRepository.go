@@ -9,8 +9,8 @@ type CategoryRepository struct {
 }
 
 // GetAll - проверка
-func (r *CategoryRepository) GetAll(categories *[]model.Category) error {
-	return nil
+func (r *CategoryRepository) GetAll() ([]model.Category, error) {
+	return nil, nil
 }
 
 // GetByID - проверка
