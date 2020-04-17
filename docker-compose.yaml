@@ -1,7 +1,6 @@
 version: '3.5'
  
 services:
-
   database:
     container_name: database_container
     image: postgres:12.1
@@ -54,13 +53,13 @@ services:
   #   restart: unless-stopped
 
 
-  go-app:
-    container_name: apiserver_container
-    build: ./go-app
+  back-api:
+    container_name: api_container
+    build: ./back-api
     env_file: 
-      - ./go-app/.env
+      - ./back-api/.env
     volumes: 
-      - ./go-app:/usr/src/app/
+      - ./back-api:/usr/src/app/
     # expose:
     #   - "5053"
     ports:
@@ -72,6 +71,15 @@ services:
       - marketnetwork
     restart: on-failure
 
+  # front-public:
+  #   container_name: front-public_container
+  #   build: ./front-public
+  #   ports: 
+  #     - "4200:80"
+  #   depends_on: 
+  #     - back-api
+  #   networks: 
+  #     - dbnetwork
   # nginx:
   #   build: "./nginx"
   #   restart: always
