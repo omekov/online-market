@@ -1,0 +1,11 @@
+<div class="container">
+  <h1>Категория продовольственных продуктов</h1>
+  <app-category-form (onCreate)="createCategory($event)">
+  </app-category-form>
+  <hr />
+  <app-categories
+  *ngFor="let c of categories"
+  [category]="c"
+  (onDelete)="deleteCategory($event)"
+  ></app-categories>
+</div>

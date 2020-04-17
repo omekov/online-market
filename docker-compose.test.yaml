@@ -1,0 +1,39 @@
+version: '3.5'
+
+services:
+  database_test:
+    container_name: database_container_test
+    image: postgres:12.1
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Welcome01}
+      PGDATA: /data/postgres
+    volumes:
+        - postgres:/data/postgres
+    ports:
+        - "5432:5432"
+    expose:
+        - "5432"
+    restart: on-failure
+    networks:
+        - integration-test
+
+  back-api_test: 
+    container_name: api_container_test
+    build:
+      context: .
+      dockerfile: ./back-api/Dockerfile.test
+    volumes:
+      - $PWD:/go/src/github.com/omekov/online-market
+    depends_on:
+      - database_test
+    networks:
+      - integration-test
+
+
+networks:
+  integration-test:
+    driver: bridge
+    
+volumes:
+    postgres:

@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-header">
+    <h3>{{category.name}}</h3>
+    <button (click)="Delete(category.id)">X</button>
+  </div>
+  <p>{{category.rus_name}}</p>
+  <p>
+    <b>Дата создание: </b>
+    {{category.create_at}}
+  </p>
+  <p>
+    <b>Дата обновление: </b>
+    {{category.update_at}}
+  </p>
+  <p>
+    <b>Категория происхождение: </b>
+    {{category.origin_id}}
+  </p>
+</div>
