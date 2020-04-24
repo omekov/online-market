@@ -12,7 +12,7 @@ type CategoryRepository struct {
 // GetAll - Возвращает все категорий
 func (r *CategoryRepository) GetAll() ([]model.Category, error) {
 	var categories []model.Category
-	rows, err := r.store.db.Query("SELECT id, name, russianName, color, originId FROM categories ORDER BY createAt DESC;")
+	rows, err := r.store.db.Query("SELECT id, name, description FROM categories ORDER BY created_at DESC;")
 	if err != nil {
 		return nil, err
 	}
@@ -22,9 +22,7 @@ func (r *CategoryRepository) GetAll() ([]model.Category, error) {
 		err = rows.Scan(
 			&c.ID,
 			&c.Name,
-			&c.RusName,
-			&c.Color,
-			&c.OriginID,
+			&c.Description,
 		)
 		if err != nil {
 			return nil, err
@@ -40,16 +38,14 @@ func (r *CategoryRepository) GetAll() ([]model.Category, error) {
 // GetByID - Возвращает по ID категорий
 func (r *CategoryRepository) GetByID(id int, category *model.Category) error {
 	err := r.store.db.QueryRow(
-		"SELECT id, name, russianName, color, updateAt, createAt, originId FROM categories WHERE id = $1;",
+		"SELECT id, name, description, updated_at, created_at FROM categories WHERE id = $1;",
 		id,
 	).Scan(
 		&category.ID,
 		&category.Name,
-		&category.RusName,
-		&category.Color,
+		&category.Description,
 		&category.UpdateAt,
 		&category.CreateAt,
-		&category.OriginID,
 	)
 	if err != nil {
 		return err
@@ -60,11 +56,9 @@ func (r *CategoryRepository) GetByID(id int, category *model.Category) error {
 // Create - Создаем категорию
 func (r *CategoryRepository) Create(category *model.Category) error {
 	err := r.store.db.QueryRow(
-		"INSERT INTO categories (name, russianName, color, originId) VALUES ($1,$2,$3,$4) RETURNING id;",
+		"INSERT INTO categories (name, description) VALUES ($1,$2) RETURNING id;",
 		&category.Name,
-		&category.RusName,
-		&category.Color,
-		&category.OriginID,
+		&category.Description,
 	).Scan(&category.ID)
 	if err != nil {
 		return err
@@ -75,13 +69,11 @@ func (r *CategoryRepository) Create(category *model.Category) error {
 // Update - Обновляем категорию по ID
 func (r *CategoryRepository) Update(id int, category *model.Category) error {
 	err := r.store.db.QueryRow(
-		"UPDATE categories SET name = $2, russianName = $3, color = $4, updateAt = $5,	originId = $6 WHERE id = $1 RETURNING id;",
+		"UPDATE categories SET name = $2, description = $3, updated_at = $4 WHERE id = $1 RETURNING id;",
 		id,
 		&category.Name,
-		&category.RusName,
-		&category.Color,
+		&category.Description,
 		&category.UpdateAt,
-		&category.OriginID,
 	).Scan(&category.ID)
 	if err != nil {
 		return err

@@ -1,5 +1,5 @@
 CREATE TABLE cart(
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
+    customer_id INTEGER REFERENCES customer(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );

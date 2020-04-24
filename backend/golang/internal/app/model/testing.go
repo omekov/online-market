@@ -9,12 +9,10 @@ import (
 func TestCategory(t *testing.T) *Category {
 	now := time.Now()
 	return &Category{
-		Name:     "Овощи",
-		RusName:  "Овощи",
-		Color:    "green",
-		CreateAt: &now,
-		UpdateAt: &now,
-		OriginID: 1,
+		Name:        "Овощи",
+		Description: "Описание овощи",
+		CreateAt:    &now,
+		UpdateAt:    &now,
 	}
 }
 
@@ -23,12 +21,10 @@ func TestCategories(t *testing.T) *[]Category {
 	now := time.Now()
 	return &[]Category{
 		Category{
-			Name:     "Овощи",
-			RusName:  "Овощи",
-			Color:    "green",
-			CreateAt: &now,
-			UpdateAt: &now,
-			OriginID: 1,
+			Name:        "Овощи",
+			CreateAt:    &now,
+			UpdateAt:    &now,
+			Description: "Описание овощи",
 		},
 	}
 }
