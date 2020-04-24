@@ -1,4 +1,9 @@
+Проект относится для учебный цели
+
 # Онлайн магазин
+
+https://trello.com/b/UMlRqRGr/online-market
+
 Внешные и внутринные порты в контайнерах
 - fronted X:5050
 - fronted X:5051

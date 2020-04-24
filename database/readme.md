@@ -23,4 +23,4 @@ migrate create-ext sql -dir migrations <table>
 migrate -path database/migrations -database "postgres://localhost:5432/marketdb?sslmode=disable&user=postgres&password=123" down
 
 чтобы ошибку устранить
-migrate -path database/migrations -database "postgres://localhost:5432/marketdb?sslmode=disable&user=postgres&password=123" force 20200417090142
+migrate -path database/migrations -database "postgres://localhost:5432/marketdb?sslmode=disable&user=postgres&password=Welcome01" force 20200417090142

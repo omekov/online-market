@@ -22,7 +22,7 @@ services:
     container_name: api_container_test
     build:
       context: .
-      dockerfile: ./back-api/Dockerfile.test
+      dockerfile: ./golang/Dockerfile.test
     volumes:
       - $PWD:/go/src/github.com/omekov/online-market
     depends_on:

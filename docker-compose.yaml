@@ -53,13 +53,13 @@ services:
   #   restart: unless-stopped
 
 
-  back-api:
+  golang:
     container_name: api_container
-    build: ./back-api
+    build: ./golang
     env_file: 
-      - ./back-api/.env
+      - ./golang/.env
     volumes: 
-      - ./back-api:/usr/src/app/
+      - ./golang:/usr/src/app/
     # expose:
     #   - "5053"
     ports:
@@ -71,13 +71,13 @@ services:
       - marketnetwork
     restart: on-failure
 
-  # front-public:
+  # frontend-angular:
   #   container_name: front-public_container
-  #   build: ./front-public
+  #   build: ./frontend-angular
   #   ports: 
   #     - "4200:80"
   #   depends_on: 
-  #     - back-api
+  #     - golang
   #   networks: 
   #     - dbnetwork
   # nginx:
