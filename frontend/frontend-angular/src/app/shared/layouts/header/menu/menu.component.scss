@@ -1,0 +1,108 @@
+@import "vars";
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row-reverse;
+  &__order {
+    min-width: 55px;
+    min-height: 55px;
+    padding: 16px;
+    background-color: $accent;
+    background-image: url("/assets/svg/button-bg.svg");
+    background-size: cover;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    transition: backgroud-color 250ms;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 4px;
+    position: relative;
+    &::after {
+      content: "";
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      top: 19px;
+      left: 18px;
+      background-image: url("/assets/svg/cart.svg");
+      background-repeat: no-repeat;
+    }
+  }
+  &__login {
+    min-width: 55px;
+    min-height: 55px;
+    padding: 16px;
+    background-color: $accent;
+    background-image: url("/assets/svg/button-bg.svg");
+    background-size: cover;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    transition: backgroud-color 250ms;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 4px;
+    position: relative;
+    margin-right: 14px;
+    &::after {
+      content: "";
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      top: 19px;
+      left: 18px;
+      background-image: url("/assets/svg/profile.svg");
+      background-repeat: no-repeat;
+    }
+  }
+  .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__toggle {
+      display: none;
+      min-width: 55px;
+      min-height: 55px;
+      padding: 16px;
+      margin: 0 14px;
+      border-radius: 4px;
+      background-color: $default;
+      border: none;
+      position: relative;
+      &::after {
+        content: "";
+        width: 17px;
+        height: 2px;
+        border-radius: 1px;
+        background-color: #000000;
+        position: absolute;
+        top: 22px;
+        left: 19px;
+        box-shadow: 0 4px 0 0 #000000, 0 8px 0 0 #000000;
+      }
+      &--active {
+        background-color: $accent;
+      }
+    }
+    &__list {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &-item {
+        padding: 16px;
+        .nav__link {
+          color: $font-color;
+          &--active {
+            color: $accent;
+          }
+        }
+      }
+    }
+    &__list--active {
+      transition: 1s;
+      box-shadow: 0 50px 80px -30px rgba(53, 52, 72, 0.2);
+      top: 125px;
+      opacity: 1;
+    }
+  }
+}

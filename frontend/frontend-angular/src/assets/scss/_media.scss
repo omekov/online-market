@@ -1,0 +1,27 @@
+@media screen and (max-width: 479px) {
+  .banner {
+    display: none!important;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .menu {
+    flex-direction: row!important;
+  }
+  .nav__toggle {
+    display: block!important;
+  }
+  .nav__list--hide{
+    display: block!important;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100px;
+    height: 0;
+    opacity: 1;
+  }
+  .menu__login {
+    margin-left: 14px;
+    margin-right: 0!important;
+  }
+}

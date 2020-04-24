@@ -1,0 +1,6 @@
+CREATE TABLE customer_photos(
+    id SERIAL PRIMARY KEY,
+    URL VARCHAR(50),
+    user_id INTEGER REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);

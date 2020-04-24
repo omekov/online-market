@@ -1,0 +1,29 @@
+@import "vars";
+@import "media";
+:host {
+  width: 100%;
+}
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  padding: 5px 3%;
+  background-color: $accent;
+  background-image: url("/assets/svg/banner-bg.svg");
+  background-position: 0% 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  font-size: 15px;
+  &-inner {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+    .notice-text {
+      color: hsla(0, 0%, 100%, 0.8);
+    }
+  }
+}

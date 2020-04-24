@@ -54,12 +54,12 @@ services:
 
 
   golang:
-    container_name: api_container
-    build: ./golang
+    container_name: golang_container
+    build: ./backend/golang
     env_file: 
-      - ./golang/.env
+      - ./backend/golang/.env
     volumes: 
-      - ./golang:/usr/src/app/
+      - ./backend/golang:/usr/src/app/
     # expose:
     #   - "5053"
     ports:
