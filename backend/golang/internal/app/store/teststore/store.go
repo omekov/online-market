@@ -7,27 +7,14 @@ import (
 
 // Store - это тестовый store для теста
 type Store struct {
-	categoryRepository *CategoryRepository
 	productRepository  *ProductRepository
 	customerRepository *CustomerRepository
+	cartRepository     *CartRepository
 }
 
 // New -
 func New() *Store {
 	return &Store{}
-}
-
-// Category -
-func (s *Store) Category() store.CategoryRepositorer {
-	if s.categoryRepository != nil {
-		return s.categoryRepository
-	}
-	s.categoryRepository = &CategoryRepository{
-		store:      s,
-		categories: make(map[int]*model.Category),
-	}
-	return s.categoryRepository
-
 }
 
 // Product - ...
@@ -52,4 +39,15 @@ func (s *Store) Customer() store.CustomerRepositorer {
 		customers: make(map[int]*model.Customer),
 	}
 	return s.customerRepository
+}
+
+func (s *Store) Cart() store.CartRepositorer {
+	if s.cartRepository != nil {
+		return s.cartRepository
+	}
+	s.cartRepository = &CartRepository{
+		store: s,
+		cart:  make(map[int]*model.Cart),
+	}
+	return s.cartRepository
 }

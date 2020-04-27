@@ -12,3 +12,10 @@ type Customer struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
+
+type CustomerPhotos struct {
+	ID        int    `json:"id"`
+	URL       string `json:"url"`
+	Customer  Customer
+	CreatedAt time.Time `json:"created_at"`
+}

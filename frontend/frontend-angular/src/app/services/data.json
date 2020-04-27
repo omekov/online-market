@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Drink",
+    "description": "Drinks",
+    "price": 4.00,
+    "category_id": 1,
+    "product_photo_id": 1
+  }
+]

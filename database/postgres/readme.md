@@ -26,6 +26,7 @@ grant all privileges on database marketdb to azamat;
 <!-- MIGRATIONS  table -->
 <!-- RUN Command is local machine -->
 migrate -path database/migrations -database "postgres://localhost:5431/marketdb?sslmode=disable&user=azamat&password=azamat" up
+migrate -path database/migrations -database "postgres://localhost:5431/marketdb?sslmode=disable&user=azamat&password=azamat" force 20200417090335
 <!-- DROP TABLE -->
 migrate -path database/migrations -database "postgres://localhost:5431/marketdb?sslmode=disable&user=azamat&password=azamat" down
 

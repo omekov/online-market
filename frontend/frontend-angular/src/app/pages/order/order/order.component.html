@@ -1,0 +1,27 @@
+<div class="header-content"></div>
+
+<div class="order">
+  <div class="card__button">
+    <button class="card-button button-default" [ngClass]="{'button-bg-active': c.active}" *ngFor="let c of categories" (click)=filterOrder(c.id)>
+      {{c.name}}
+    </button>
+  </div>
+  <div class="cards">
+    <div class="card" *ngFor="let p of products">
+      <a href="" class="card__link">
+        <img [src]="p.url" alt="lime" class="card__img">
+      </a>
+      <div class="card__content">
+        <a href="" class="card__link card__header">
+          <h4 class="card__name">{{p.name}}</h4>
+          <span class="card__order">{{p.price | currency}}</span>
+        </a>
+        <p class="card__text">{{p.description}}</p>
+        <form class="card__form" (submit)="addCart()">
+          <input class="input-default card__input" type="number" value="1">
+          <button class="button-primary" type="submit">Add To Cart</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

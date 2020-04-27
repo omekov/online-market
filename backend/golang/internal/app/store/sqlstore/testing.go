@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strings"
 	"testing"
+
+	"github.com/gomodule/redigo/redis"
 )
 
 // TestDB ...
@@ -23,4 +25,8 @@ func TestDB(t *testing.T, databaseURL string) (*sql.DB, func(...string)) {
 		}
 		db.Close()
 	}
+}
+
+func TestCacheDB(t *testing.T, cacheURL string) redis.Conn {
+	return nil
 }

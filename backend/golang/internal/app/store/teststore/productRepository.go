@@ -32,3 +32,13 @@ func (r *ProductRepository) Update(int, *model.Product) error {
 func (r *ProductRepository) Delete(int) error {
 	return nil
 }
+
+// CreateStock - проверка
+func (r *ProductRepository) CreateStock(*model.Stock) error {
+	return nil
+}
+
+// CreateCategory - проверка
+func (r *ProductRepository) CreateCategory(*model.Category) error {
+	return nil
+}

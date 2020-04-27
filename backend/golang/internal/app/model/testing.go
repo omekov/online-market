@@ -11,8 +11,8 @@ func TestCategory(t *testing.T) *Category {
 	return &Category{
 		Name:        "Овощи",
 		Description: "Описание овощи",
-		CreateAt:    &now,
-		UpdateAt:    &now,
+		CreatedAt:   &now,
+		UpdatedAt:   &now,
 	}
 }
 
@@ -22,9 +22,33 @@ func TestCategories(t *testing.T) *[]Category {
 	return &[]Category{
 		Category{
 			Name:        "Овощи",
-			CreateAt:    &now,
-			UpdateAt:    &now,
+			CreatedAt:   &now,
+			UpdatedAt:   &now,
 			Description: "Описание овощи",
+		},
+	}
+}
+
+func TestProduct(t *testing.T) *Product {
+	now := time.Now()
+	return &Product{
+		Name:        "Овощи",
+		Description: "Описание овощи",
+		CreatedAt:   &now,
+		UpdatedAt:   &now,
+		Price:       999.99,
+		Category: &Category{
+			Name:        "Овощной",
+			Description: "Овощной отдел",
+			CreatedAt:   &now,
+			UpdatedAt:   &now,
+		},
+		Stock: &Stock{
+			Name:        "Скидка года",
+			Description: "Бери не глядя",
+			Precent:     0.01,
+			CreatedAt:   &now,
+			UpdatedAt:   &now,
 		},
 	}
 }

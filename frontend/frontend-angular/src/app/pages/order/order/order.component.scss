@@ -1,0 +1,51 @@
+@import "vars";
+.card__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .card-button {
+    margin: 0 20px;
+  }
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0.5em;
+  padding: 1em;
+}
+.card {
+  display: flex;
+  min-height: 200px;
+  padding: 25px;
+  align-items: center;
+  border: 1px solid rgba(53, 184, 190, 0.15);
+  border-radius: 6px;
+  background-color: #fff;
+  transition: border-color 300ms ease;
+}
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  align-items: center;
+  text-decoration: none;
+}
+.card__form {
+  display: flex;
+}
+.card__img {
+  overflow: hidden;
+    max-height: 120px;
+    max-width: 120px;
+    min-height: 120px;
+    min-width: 120px;
+    margin-right: 30px;
+    border-radius: 8px;
+}
+ .card__input {
+  width: 60px;
+  height: 45px;
+  margin-right: 8px;
+  margin-bottom: 0px;
+  border-radius: 6px;
+ }

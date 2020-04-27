@@ -2,7 +2,8 @@
 @import 'fonts';
 @import 'atom';
 @import 'media';
-
+@import 'form';
+@import 'vars';
 html {
   box-sizing: border-box;
 }
@@ -36,6 +37,7 @@ li {
 }
 a {
   cursor: pointer;
+  text-decoration: none;
   img {
     max-width: 100%;
     vertical-align: middle;
@@ -43,4 +45,3 @@ a {
     border: 0;
   }
 }
-

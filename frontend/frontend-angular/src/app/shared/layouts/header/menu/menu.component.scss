@@ -8,16 +8,15 @@
     min-width: 55px;
     min-height: 55px;
     padding: 16px;
-    background-color: $accent;
-    background-image: url("/assets/svg/button-bg.svg");
-    background-size: cover;
-    background-position: 0px 0px;
-    background-repeat: no-repeat;
-    transition: backgroud-color 250ms;
     font-size: 18px;
     text-align: center;
     border-radius: 4px;
     position: relative;
+    background-color: $accent;
+    background-size: cover;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    transition: backgroud-color 250ms;
     &::after {
       content: "";
       width: 25px;

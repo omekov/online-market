@@ -2,15 +2,6 @@ package store
 
 import "github.com/omekov/online-market/backend/golang/internal/app/model"
 
-// CategoryRepositorer - какие методы есть в категорий
-type CategoryRepositorer interface {
-	GetAll() ([]model.Category, error)
-	GetByID(int, *model.Category) error
-	Create(*model.Category) error
-	Update(int, *model.Category) error
-	Delete(int) error
-}
-
 // ProductRepositorer - какие методы есть в продуктов
 type ProductRepositorer interface {
 	GetAll() ([]model.Product, error)
@@ -18,6 +9,8 @@ type ProductRepositorer interface {
 	Create(*model.Product) error
 	Update(int, *model.Product) error
 	Delete(int) error
+	CreateCategory(*model.Category) error
+	CreateStock(*model.Stock) error
 }
 
 // CustomerRepositorer - какие методы есть у клиентов
@@ -27,4 +20,12 @@ type CustomerRepositorer interface {
 	Create(*model.Customer) error
 	Update(int, *model.Customer) error
 	Delete(int) error
+}
+
+type CartRepositorer interface {
+	GetByID(int, *model.Cart) error
+	Create(*model.Cart) error
+	Update(int, *model.Cart) error
+	GetByCustomerID(int) ([]model.Cart, error)
+	GetByCartIDandProductID(int, int) (*model.CartProduct, error)
 }

@@ -14,9 +14,9 @@ func TestCategoryRepository_Create(t *testing.T) {
 	defer teardown("categories")
 
 	s := sqlstore.New(db)
-	c := model.TestCategory(t)
-	assert.NoError(t, s.Category().Create(c))
-	assert.NotNil(t, c)
+	p := model.TestProduct(t)
+	assert.NoError(t, s.Product().Create(p))
+	assert.NotNil(t, p)
 }
 
 func TestCategoryRepository_GetByID(t *testing.T) {
@@ -24,38 +24,38 @@ func TestCategoryRepository_GetByID(t *testing.T) {
 	defer teardown("categories")
 
 	s := sqlstore.New(db)
-	c := model.TestCategory(t)
-	err := s.Category().GetByID(1, c)
+	c := model.TestProduct(t)
+	err := s.Product().GetByID(1, c)
 	assert.EqualError(t, err, store.ErrRecordNotFound.Error())
-	s.Category().Create(c)
-	err = s.Category().GetByID(1, c)
+	s.Product().Create(c)
+	err = s.Product().GetByID(1, c)
 	assert.NoError(t, err)
 	assert.NotNil(t, c)
 }
 
-func TestCategoryRepository_GetAll(t *testing.T) {
-	db, teardown := sqlstore.TestDB(t, databaseURL)
-	defer teardown("categories")
+// func TestCategoryRepository_GetAll(t *testing.T) {
+// 	db, teardown := sqlstore.TestDB(t, databaseURL)
+// 	defer teardown("categories")
 
-	s := sqlstore.New(db)
-	c := model.TestCategory(t)
-	_, err := s.Category().GetAll()
-	assert.EqualError(t, err, store.ErrRecordNotFound.Error())
-	s.Category().Create(c)
-	_, err = s.Category().GetAll()
-	assert.NoError(t, err)
-	assert.NotNil(t, c)
-}
+// 	s := sqlstore.New(db)
+// 	c := model.TestCategory(t)
+// 	_, err := s.Product().GetAll()
+// 	assert.EqualError(t, err, store.ErrRecordNotFound.Error())
+// 	s.Product().Create(c)
+// 	_, err = s.Product().GetAll()
+// 	assert.NoError(t, err)
+// 	assert.NotNil(t, c)
+// }
 func TestCategoryRepository_Update(t *testing.T) {
 	db, teardown := sqlstore.TestDB(t, databaseURL)
 	defer teardown("categories")
 
 	s := sqlstore.New(db)
-	c := model.TestCategory(t)
-	err := s.Category().Update(1000, c)
+	c := model.TestProduct(t)
+	err := s.Product().Update(1000, c)
 	assert.EqualError(t, err, store.ErrRecordNotFound.Error())
-	s.Category().Create(c)
-	err = s.Category().Update(1, c)
+	s.Product().Create(c)
+	err = s.Product().Update(1, c)
 	assert.NoError(t, err)
 	assert.NotNil(t, c)
 }
@@ -65,11 +65,11 @@ func TestCategoryRepository_Delete(t *testing.T) {
 	defer teardown("categories")
 
 	s := sqlstore.New(db)
-	c := model.TestCategory(t)
-	err := s.Category().Delete(1)
+	c := model.TestProduct(t)
+	err := s.Product().Delete(1)
 	assert.EqualError(t, err, store.ErrRecordNotFound.Error())
-	s.Category().Create(c)
-	err = s.Category().Delete(1)
+	s.Product().Create(c)
+	err = s.Product().Delete(1)
 	assert.NoError(t, err)
 	assert.NotNil(t, c)
 }

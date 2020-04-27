@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestServer_handlerCategories(t *testing.T) {
-	s := newServer(teststore.New())
+func TestServer_handlerProducts(t *testing.T) {
+	s := newServer(teststore.New(), nil)
 	testCases := []struct {
 		name         string
 		payload      interface{}
@@ -28,15 +28,15 @@ func TestServer_handlerCategories(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			rec := httptest.NewRecorder()
-			req, _ := http.NewRequest(http.MethodGet, route+"/categories", nil)
+			req, _ := http.NewRequest(http.MethodGet, route+"/products", nil)
 			s.ServeHTTP(rec, req)
 			assert.Equal(t, tc.expectedCode, rec.Code)
 		})
 	}
 }
 
-func TestServer_handlerCategoryCreate(t *testing.T) {
-	s := newServer(teststore.New())
+func TestServer_handlerProductCreate(t *testing.T) {
+	s := newServer(teststore.New(), nil)
 	testCases := []struct {
 		name         string
 		payload      interface{}
@@ -65,15 +65,15 @@ func TestServer_handlerCategoryCreate(t *testing.T) {
 			rec := httptest.NewRecorder()
 			buf := &bytes.Buffer{}
 			json.NewEncoder(buf).Encode(tc.payload)
-			req, _ := http.NewRequest(http.MethodPost, route+"/categories", buf)
+			req, _ := http.NewRequest(http.MethodPost, route+"/products", buf)
 			s.ServeHTTP(rec, req)
 			assert.Equal(t, tc.expectedCode, rec.Code)
 		})
 	}
 }
 
-func TestServer_handlerCategoriesUpdate(t *testing.T) {
-	s := newServer(teststore.New())
+func TestServer_handlerProductsUpdate(t *testing.T) {
+	s := newServer(teststore.New(), nil)
 	testCases := []struct {
 		name         string
 		payload      interface{}
@@ -102,15 +102,15 @@ func TestServer_handlerCategoriesUpdate(t *testing.T) {
 			rec := httptest.NewRecorder()
 			buf := &bytes.Buffer{}
 			json.NewEncoder(buf).Encode(tc.payload)
-			req, _ := http.NewRequest(http.MethodPut, route+"/categories/1", buf)
+			req, _ := http.NewRequest(http.MethodPut, route+"/products/1", buf)
 			s.ServeHTTP(rec, req)
 			assert.Equal(t, tc.expectedCode, rec.Code)
 		})
 	}
 }
 
-func TestServer_handlerCategoriesDelete(t *testing.T) {
-	s := newServer(teststore.New())
+func TestServer_handlerProductsDelete(t *testing.T) {
+	s := newServer(teststore.New(), nil)
 	testCases := []struct {
 		name         string
 		payload      interface{}
@@ -127,7 +127,7 @@ func TestServer_handlerCategoriesDelete(t *testing.T) {
 			rec := httptest.NewRecorder()
 			buf := &bytes.Buffer{}
 			json.NewEncoder(buf).Encode(tc.payload)
-			req, _ := http.NewRequest(http.MethodDelete, route+"/categories/666", buf)
+			req, _ := http.NewRequest(http.MethodDelete, route+"/products/666", buf)
 			s.ServeHTTP(rec, req)
 			assert.Equal(t, tc.expectedCode, rec.Code)
 		})
