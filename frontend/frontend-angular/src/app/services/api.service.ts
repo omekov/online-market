@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -25,5 +25,11 @@ export class ApiService {
   }
   Delete(url: string, id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}${url}/${id}`)
+  }
+  Upload(url: string, formData: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}${url}`,formData, {
+      reportProgress: true,
+      observe: 'events'
+    })
   }
 }

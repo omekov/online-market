@@ -1,86 +1,75 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { ApiService } from "../../../services/api.service";
+import { IProduct, ICategory } from "src/app/interfaces/product";
+import { HttpEventType, HttpErrorResponse } from "@angular/common/http";
+import { of } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss']
+  selector: "app-order",
+  templateUrl: "./order.component.html",
+  styleUrls: ["./order.component.scss"],
 })
 export class OrderComponent implements OnInit {
+  @ViewChild("fileUpload", { static: false }) fileUpload: ElementRef;
+  files = [];
+  constructor(private apiService: ApiService) {}
 
-  constructor() { }
-
+  products: IProduct[] = [];
+  categories: ICategory[] = [];
   ngOnInit(): void {
+    this.apiService
+      .GetAll("products")
+      .subscribe((data) => (this.products = data));
+    this.apiService
+      .GetAll("categories")
+      .subscribe((data) => (this.categories = data));
   }
-  categories = [
-    {
-      id: 1,
-      name: "Full Menu",
-      active: true,
-    },
-    {
-      id: 2,
-      name: "Burgers",
-      active: false,
-    },
-    {
-      id: 3,
-      name: "Sides",
-      active: false,
-    },
-    {
-      id: 4,
-      name: "Drinks",
-      active: false,
-    }
-  ]
   filterOrder(id: number): void {
-    return
+    return;
   }
-  addCart() {
-
+  addCart() {}
+  uploadPhoto(file) {
+    const formData = new FormData();
+    formData.append("file", file.data);
+    file.inProgress = true;
+    this.apiService
+      .Upload("uploadproductphoto", formData)
+      .pipe(
+        map((event) => {
+          switch (event.type) {
+            case HttpEventType.UploadProgress:
+              file.progress = Math.round((event.loaded * 100) / event.total);
+              break;
+            case HttpEventType.Response:
+              return event;
+          }
+        }),
+        catchError((error: HttpErrorResponse) => {
+          file.inProgress = false;
+          return of(`${file.data.name} upload failed.`);
+        })
+      )
+      .subscribe((event: any) => {
+        if (typeof event === "object") {
+          console.log(event.body);
+        }
+      });
   }
-  products = [
-    {
-      id: 1,
-      name: "Drink Fig & Lime",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      price: 4,
-      url: "/assets/img/lime.png"
-    },
-    {
-      id: 2,
-      name: "Drink Fig & Lime",
-      description: "Blanditiis doloribus fugiat pariatur facere accusantium.",
-      price: 4,
-      url: "/assets/img/lime.png"
-    },
-    {
-      id: 2,
-      name: "Drink Fig & Lime",
-      description: "Blanditiis doloribus fugiat pariatur facere accusantium.",
-      price: 4,
-      url: "/assets/img/lime.png"
-    },
-    {
-      id: 2,
-      name: "Drink Fig & Lime",
-      description: "Blanditiis doloribus fugiat pariatur facere accusantium.",
-      price: 4,
-      url: "/assets/img/lime.png"
-    },
-    {
-      id: 2,
-      name: "Drink Fig & Lime",
-      description: "Blanditiis doloribus fugiat pariatur facere accusantium.",
-      price: 4,
-      url: "/assets/img/lime.png"
-    },
-    {
-      id: 2,
-      name: "Drink Fig & Lime",
-      description: "Blanditiis doloribus fugiat pariatur facere accusantium.",
-      price: 4,
-      url: "/assets/img/lime.png"
-    }
-  ]
+  private uploadFiles() {
+    this.fileUpload.nativeElement.value = "";
+    this.files.forEach((file) => {
+      this.uploadPhoto(file);
+    });
+  }
+  onClick() {
+    const fileUpload = this.fileUpload.nativeElement;
+    fileUpload.onchange = () => {
+      for (let index = 0; index < fileUpload.files.length; index++) {
+        const file = fileUpload.files[index];
+        this.files.push({ data: file, inProgress: false, progress: 0 });
+      }
+      this.uploadFiles();
+    };
+    fileUpload.click();
+  }
 }

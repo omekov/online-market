@@ -1,0 +1,8 @@
+<div class="content" [ngStyle]="{'background-image': 'url(' + section.backgroundImage + ')', 'flex-direction': section.reverse ? 'row-reverse' : 'row' }">
+  <div class="content__image" [ngStyle]="{'background-image': 'url(' + section.content.image + ')'}"></div>
+  <div class="content__text">
+    <h1>{{section.content.name}}</h1>
+    <p>{{section.content.description}}</p>
+    <button class="but__basic but__accent-bg" [routerLink]="[section.content.route]">{{section.content.buttonName}}</button>
+  </div>
+</div>

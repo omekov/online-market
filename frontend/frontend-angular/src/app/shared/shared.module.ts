@@ -10,6 +10,9 @@ import {
   NotLayoutComponent,
   LayoutComponent,
 } from "./layouts/layout.component";
+import { HttpClientModule } from '@angular/common/http';
+import { SectionComponent } from './components/section/section.component';
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +23,16 @@ import {
     MenuComponent,
     NotLayoutComponent,
     LayoutComponent,
+    SectionComponent,
+    TableComponent,
   ],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HttpClientModule],
   exports: [
     HeaderComponent,
     MenuComponent,
     LayoutComponent,
     NotLayoutComponent,
+    SectionComponent,
   ],
 })
 export class SharedModule {}

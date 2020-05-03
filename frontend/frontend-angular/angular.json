@@ -28,8 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/normalize.css/normalize.css"
+              "src/styles.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

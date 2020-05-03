@@ -2,7 +2,7 @@
 
 <div class="order">
   <div class="card__button">
-    <button class="card-button button-default" [ngClass]="{'button-bg-active': c.active}" *ngFor="let c of categories" (click)=filterOrder(c.id)>
+    <button class="but__card-nav" [ngClass]="{'but__accent-bg': c.active}" *ngFor="let c of categories" (click)=filterOrder(c.id)>
       {{c.name}}
     </button>
   </div>
@@ -19,9 +19,22 @@
         <p class="card__text">{{p.description}}</p>
         <form class="card__form" (submit)="addCart()">
           <input class="input-default card__input" type="number" value="1">
-          <button class="button-primary" type="submit">Add To Cart</button>
+          <button class="but__card" type="submit">Add To Cart</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+
+<div>
+  <ul>
+    <li *ngFor="let f of files">{{f.name}}</li>
+  </ul>
+  <input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" />
+  <button class="button-primary" (click)="onClick()">
+    Upload
+  </button>
+</div>
+
+

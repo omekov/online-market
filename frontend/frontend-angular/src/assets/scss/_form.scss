@@ -1,53 +1,53 @@
-@import 'vars';
+@import "vars";
+.but {
+  &__icon {
+    min-width: 55px;
+    min-height: 55px;
+    padding: 16px;
+    position: relative;
+    background-image: url("/assets/svg/button-bg.svg");
+    &::after {
+      content: "";
+      width: 25px;
+      height: 25px;
+      position: absolute;
+      top: 17px;
+      left: 15px;
+      background-repeat: no-repeat;
+      background-image: url("/assets/svg/cart.svg");
+    }
+  }
+  // size buttons
+  &__basic {
+    font-size: 18px;
+    padding: 20px 35px;
+  }
+  &__card {
+    font-size: 16px;
+    padding: 9px 15px;
+  }
+  &__card-nav {
+    font-size: 18px;
+    padding: 16px 45px;
+  }
+  // color buttons
+  &__accent {
+    background-size: cover;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    background-color: $accent;
+    color: #ffffff;
+  }
+  &__accent-bg {
+    background-size: cover;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    background-color: $accent;
+    color: #ffffff;
+    background-image: url("/assets/svg/button-bg.svg");
+  }
+  &__white {
+    background-color: #ffffff;
+  }
+}
 
-.button-default {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px 45px;
-  background-size: cover;
-  background-position: 0px 0px;
-  background-repeat: no-repeat;
-  transition: 250ms;
-  font-size: 16px;
-  background-color: transparent;
-  border: 1px solid $button-border;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.button-primary {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 15px;
-  background-size: cover;
-  background-position: 0px 0px;
-  background-repeat: no-repeat;
-  transition: 250ms;
-  font-size: 16px;
-  background-color: $accent;
-  border: 1px solid $button-border;
-  border-radius: 6px;
-  cursor: pointer;
-  color: #ffffff;
-}
-.button-bg-active {
-  background-color: $accent;
-  background-image: url("/assets/svg/button-bg.svg");
-  background-size: cover;
-  background-position: 0px 0px;
-  background-repeat: no-repeat;
-  color: #ffffff;
-}
-
-.input-default {
-    background-color: $input-bgd;
-    border: 1px solid $input-border;
-    border-radius: 3px;
-    display: block;
-    height: 38px;
-    line-height: 20px;
-    margin-bottom: 10px;
-    padding: 8px 12px 6px;
-    appearance: none;
-}
