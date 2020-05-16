@@ -65,7 +65,8 @@ func dbConfig() (string, error) {
 }
 
 func newRedis() (redis.Conn, error) {
-	c, err := redis.DialURL("redis://shop_redis_container")
+	url := fmt.Sprintf("redis://%s", os.Getenv("REDIS_HOST"))
+	c, err := redis.DialURL(url)
 	if err != nil {
 		return nil, err
 	}

@@ -1,24 +1,23 @@
 <div class="menu">
-  <a class="menu__order"></a>
-  <!-- <a class="menu__login"></a> -->
+  <button class="but__icon-cart but__accent menu__button"></button>
   <nav class="nav">
-    <button class="nav__toggle" [ngClass]="{'nav__toggle--active': isMenuBtn}" (click)="OpenMenu()">
+    <button class="but__icon-burger but__white menu__button" [ngClass]="{'nav__toggle--active': isMenuBtn}" (click)="OpenMenu()">
     </button>
     <ul class="nav__list nav__list--hide" [ngClass]="{'nav__list--active': isMenuBtn}">
       <li class="nav__list-item">
-        <a class="nav__link--active nav__link" [routerLink]="['/']" routerLinkActive="active">Home</a>
+        <a class="nav__link" routerLink="/product" routerLinkActive="nav__link--active">Home</a>
       </li>
       <li class="nav__list-item">
-        <a class="nav__link" [routerLink]="['/order']" >Order</a>
+        <a class="nav__link" routerLink="/order" routerLinkActive="nav__link--active">Order</a>
       </li>
       <li class="nav__list-item">
-        <a class="nav__link" routerLink="/company">Company</a>
+        <a class="nav__link" routerLink="/company" routerLinkActive="nav__link--active">Company</a>
       </li>
       <li class="nav__list-item">
-        <a class="nav__link" routerLink="/faq">FAQ</a>
+        <a class="nav__link" routerLink="/faq" routerLinkActive="nav__link--active">FAQ</a>
       </li>
       <li class="nav__list-item">
-        <a class="nav__link" routerLink="/contact">Contact</a>
+        <a class="nav__link" routerLink="/contact" routerLinkActive="nav__link--active">Contact</a>
       </li>
     </ul>
   </nav>

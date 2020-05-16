@@ -42,3 +42,7 @@ func (r *ProductRepository) CreateStock(*model.Stock) error {
 func (r *ProductRepository) CreateCategory(*model.Category) error {
 	return nil
 }
+
+func (r *ProductRepository) GetAllCategory() ([]model.Category, error) {
+	return nil, nil
+}

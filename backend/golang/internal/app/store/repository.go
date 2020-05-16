@@ -9,6 +9,7 @@ type ProductRepositorer interface {
 	Create(*model.Product) error
 	Update(int, *model.Product) error
 	Delete(int) error
+	GetAllCategory() ([]model.Category, error)
 	CreateCategory(*model.Category) error
 	CreateStock(*model.Stock) error
 }

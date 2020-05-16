@@ -1,6 +1,6 @@
 @import "vars";
 .but {
-  &__icon {
+  &__icon-cart {
     min-width: 55px;
     min-height: 55px;
     padding: 16px;
@@ -15,6 +15,24 @@
       left: 15px;
       background-repeat: no-repeat;
       background-image: url("/assets/svg/cart.svg");
+    }
+  }
+  &__icon-burger {
+    min-width: 55px;
+    min-height: 55px;
+    padding: 16px;
+    position: relative;
+    background-color: $default;
+    &::after {
+      content: "";
+      width: 17px;
+      height: 2px;
+      border-radius: 1px;
+      background-color: #000000;
+      position: absolute;
+      top: 22px;
+      left: 19px;
+      box-shadow: 0 4px 0 0 #000000, 0 8px 0 0 #000000;
     }
   }
   // size buttons

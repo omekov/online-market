@@ -1,27 +1,23 @@
 @media screen and (max-width: 479px) {
   .banner {
-    display: none!important;
+    visibility: hidden;
   }
 }
 
 @media screen and (max-width: 991px) {
+  .but__icon-burger {
+    visibility: visible!important;
+  }
   .menu {
-    flex-direction: row!important;
+    flex-direction: row;
   }
-  .nav__toggle {
-    display: block!important;
-  }
-  .nav__list--hide{
-    display: block!important;
-    width: 100%;
+  .nav__list--hide {
+    margin-top: 175px;
+    visibility: hidden;
+    flex-direction: column;
     position: absolute;
+    background-color: #ffffff;
+    width: 100%;
     left: 0;
-    top: 100px;
-    height: 0;
-    opacity: 1;
-  }
-  .menu__login {
-    margin-left: 14px;
-    margin-right: 0!important;
   }
 }

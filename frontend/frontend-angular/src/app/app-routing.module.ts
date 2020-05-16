@@ -19,7 +19,7 @@ const routes: Routes = [
           import("./pages/company/company.module").then((m) => m.CompanyModule),
       },
       {
-        path: "",
+        path: "product",
         loadChildren: () =>
           import("./pages/product/product.module").then((m) => m.ProductModule),
       },
