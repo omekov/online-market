@@ -2,7 +2,7 @@ version: '3.5'
  
 services:
   postgres:
-    container_name: shop_postgres_container
+    container_name: market_postgres_container
     image: postgres:12.1
     env_file: 
       - ./database/postgres/.env
@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   redis:
-    container_name: shop_redis_container
+    container_name: market_redis_container
     image: redis:5.0
     ports:
       - "6379:6379"
@@ -35,7 +35,7 @@ services:
   #     - postgres
    
   # pgadmin:
-  #   container_name: shop_pgadmin_container
+  #   container_name: market_pgadmin_container
   #   image: dpage/pgadmin4:4.16
   #   env_file: 
   #     - ./webservers/pgadmin/.env
@@ -54,7 +54,7 @@ services:
 
 
   golang:
-    container_name: shop_golang_container
+    container_name: market_golang_container
     build: ./backend/golang
     env_file: 
       - ./backend/golang/.env
@@ -70,15 +70,15 @@ services:
       - marketnetwork
     restart: on-failure
 
-  # frontend-angular:
-  #   container_name: front-public_container
-  #   build: ./frontend-angular
-  #   ports: 
-  #     - "4200:80"
-  #   depends_on: 
-  #     - golang
-  #   networks: 
-  #     - dbnetwork
+  frontend-angular:
+    container_name: angular_container
+    build: ./frontend/frontend-angular
+    ports: 
+      - "4200:80"
+    depends_on: 
+      - golang
+    networks: 
+      - dbnetwork
   # nginx:
   #   build: "./nginx"
   #   restart: always

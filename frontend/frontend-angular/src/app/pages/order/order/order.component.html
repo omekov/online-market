@@ -2,7 +2,7 @@
 
 <div class="order">
   <div class="card__button">
-    <button class="but__card-nav" [ngClass]="{'but__accent-bg': c.active}" *ngFor="let c of categories" (click)=filterOrder(c.id)>
+    <button class="but__card-nav but__white" [ngClass]="{'but__accent-bg': c.active}" *ngFor="let c of categories" (click)=filterOrder(c.id)>
       {{c.name}}
     </button>
   </div>

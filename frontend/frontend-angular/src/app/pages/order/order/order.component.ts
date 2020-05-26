@@ -19,7 +19,7 @@ export class OrderComponent implements OnInit {
   ngOnInit(): void {
     this.apiService
       .GetAll("products")
-      .subscribe((data) => (this.products = data));
+      .subscribe((data) => (this.products = data.filter(el => el.url = "/assets/img/lime.png")));
     this.apiService
       .GetAll("categories")
       .subscribe((data) => (this.categories = data));

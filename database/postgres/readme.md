@@ -1,5 +1,5 @@
 <!-- Starting bash for container -->
-docker exec -it shop_postgres_container bash
+docker exec -it market_postgres_container bash
 
 <!-- reset password postgres -->
 passwd postgres
