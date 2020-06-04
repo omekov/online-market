@@ -27,7 +27,7 @@ func TestServer_handlerProductID(t *testing.T) {
 		},
 		{
 			name:         "invalid not found",
-			payload:      "2992929292",
+			payload:      "29929292asd",
 			expectedCode: http.StatusNotFound,
 		},
 	}
